@@ -11,17 +11,18 @@ start() ->
 accept_connections(ListenSocket) ->
     {ok, ClientSocket} = gen_tcp:accept(ListenSocket),
     io:format("Client connected: ~p~n", [ClientSocket]),
-    gen_tcp:send(ClientSocket, <<"Welcome to the chat server!">>), %% Send a welcome message to the client
     spawn(fun() -> handle_client(ClientSocket) end),
+    gen_tcp:send(ClientSocket, <<"Welcome to the chat server!">>),
     accept_connections(ListenSocket).
 
 handle_client(Socket) ->
+    io:format("Setting socket to active once: ~p~n", [Socket]),
     inet:setopts(Socket, [{active, once}]),
     receive
         {tcp, Socket, Data} ->
             io:format("Received data: ~p~n", [Data]),
-            % Echo the received data back to the client
-            gen_tcp:send(Socket, Data),
+            Result = gen_tcp:send(Socket, Data),
+            io:format("Sent data result: ~p~n", [Result]),
             inet:setopts(Socket, [{active, once}]),
             handle_client(Socket);
         {tcp_closed, Socket} ->
