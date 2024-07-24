@@ -1,6 +1,6 @@
 # Overview
 
-{Important!  Do not say in this section that this is college assignment.  Talk about what you are trying to accomplish as a software engineer to further your learning.}
+As a software engineer, I hope and aspire to learn various technologies and implementations to increase my general knowledge of software and expand my repertiore so that I may contribute to the world at large with my own unique takes on solutions that people need.
 
 {Provide a description the networking program that you wrote. Describe how to use your software.  If you did Client/Server, then you will need to describe how to start both.}
 

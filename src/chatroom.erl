@@ -10,7 +10,7 @@ start() ->
 % Starts the client process
 start_client() ->
     {ok, Socket} = gen_udp:open(rand:uniform(64511)+1024, [binary, {active,true}]),
-    gen_udp:send(Socket, {127,0,0,1}, 8080, "connect"),
+    gen_udp:send(Socket, {35,188,15,57}, 8080, "connect"),
     % spawn(fun flush_loop/0),
     Socket.
 
@@ -40,4 +40,4 @@ server(ListenSocket, Clients) ->
 
 % Function to send messages from client to server
 send_message(Socket, Message) ->
-    gen_udp:send(Socket, {127,0,0,1}, 8080, Message).
+    gen_udp:send(Socket, {35,188,15,57}, 8080, Message).
