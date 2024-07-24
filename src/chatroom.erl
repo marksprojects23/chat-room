@@ -88,8 +88,8 @@ server(Clients, ListenSocket) ->
     {ok, ClientSocket} = gen_tcp:accept(ListenSocket),
     NewClients = [ClientSocket | Clients],
     io:format("Client connected: ~p~n", [ClientSocket]),
+    self() ! {update_clients, NewClients},
     spawn(fun() -> server(NewClients, ListenSocket) end), %% Keep accepting new connections
-    handle_messages(stop),
     handle_messages(NewClients).
 
 handle_messages(Clients) ->
@@ -103,8 +103,9 @@ handle_messages(Clients) ->
         {tcp_closed, Socket} ->
             io:format("Client disconnected: ~p~n", [Socket]),
             handle_messages(lists:delete(Socket, Clients));
-        stop ->
-            ok
+        {update_clients, NewClients} ->
+            io:format("Updating clients list: ~p~n", [NewClients]),
+            handle_messages(NewClients)
     end.
 
 % Client function to handle incoming messages
