@@ -75,7 +75,7 @@ start_server(Port) ->
     {ok, ListenSocket} = gen_tcp:listen(Port, [binary, {packet, 4}, {active, true}, {reuseaddr, true}]),
     io:format("Server listening on port ~p~n", [Port]),
     spawn(fun() -> server([], ListenSocket) end),
-    erlang:set_cookie(node(), cookie1).
+    ok.
 
 % Starts the client process
 start_client(IP, Port) ->
