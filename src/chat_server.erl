@@ -1,7 +1,7 @@
 -module(chat_server).
 -export([start/0, accept_connections/1, handle_client/1]).
 
--define(TCP_OPTIONS, [{active, false}, {packet, 4}, {reuseaddr, true}]).
+-define(TCP_OPTIONS, [{active, false}, {packet, 0}, {reuseaddr, true}]).
 
 start() ->
     {ok, ListenSocket} = gen_tcp:listen(8080, ?TCP_OPTIONS),
@@ -11,12 +11,12 @@ start() ->
 accept_connections(ListenSocket) ->
     {ok, ClientSocket} = gen_tcp:accept(ListenSocket),
     io:format("Client connected: ~p~n", [ClientSocket]),
+    gen_tcp:send(Socket, <<"Welcome to the chat server!">>), %% Send a welcome message to the client
     spawn(fun() -> handle_client(ClientSocket) end),
     accept_connections(ListenSocket).
 
 handle_client(Socket) ->
     inet:setopts(Socket, [{active, once}]),
-    gen_tcp:send(Socket, <<"Welcome to the chat server!">>), %% Send a welcome message to the client
     receive
         {tcp, Socket, Data} ->
             io:format("Received data: ~p~n", [Data]),

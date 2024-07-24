@@ -79,7 +79,7 @@ start_server(Port) ->
 
 % Starts the client process
 start_client(IP, Port) ->
-    {ok, Socket} = gen_tcp:connect(IP, Port, [binary, {packet, 4}, {active, true}]),
+    {ok, Socket} = gen_tcp:connect(IP, Port, [binary, {packet, 0}, {active, once}]),
     spawn(fun() -> client(Socket) end),
     Socket.
 
