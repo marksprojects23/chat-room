@@ -116,7 +116,9 @@ client(Socket) ->
             io:format("Received from server: ~p~n", [Message]),
             client(Socket);
         {tcp_closed, _} ->
-            io:format("Connection closed~n")
+            io:format("Connection closed~n");
+        {tcp_error, _, Reason} ->
+            io:format("Connection error: ~p~n", [Reason])
     end.
 
 % Function to send messages from client to server
@@ -124,3 +126,4 @@ send_message(Socket, Message) ->
     gen_tcp:send(Socket, Message).
 
 %Socket1 = chatroom:start_client("35.188.15.57", 8080).
+%chatroom:send_message(Socket1, <<"Hello World!">>).
