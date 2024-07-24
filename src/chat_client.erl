@@ -1,5 +1,5 @@
 -module(chat_client).
--export([start/2, client_loop/2]).
+-export([start/2, client_loop/2, send_message/2]).
 
 start(IP, Port) ->
     io:format("Attempting to connect to ~s:~p~n", [IP, Port]),

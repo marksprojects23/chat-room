@@ -17,7 +17,8 @@ handle_client(Socket, Clients) ->
     receive
         {tcp, Socket, Data} ->
             lists:foreach(fun(Client) ->
-                gen_tcp:send(Client, Data)
+                gen_tcp:send(Client, Data),
+                io:format("Client sent: ~p~n", [Socket])
             end, [Socket | Clients]),
             handle_client(Socket, [Socket | Clients]);
         {tcp_closed, Socket} ->
