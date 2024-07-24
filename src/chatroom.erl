@@ -89,6 +89,7 @@ server(Clients, ListenSocket) ->
     NewClients = [ClientSocket | Clients],
     io:format("Client connected: ~p~n", [ClientSocket]),
     spawn(fun() -> server(NewClients, ListenSocket) end), %% Keep accepting new connections
+    handle_messages(stop),
     handle_messages(NewClients).
 
 handle_messages(Clients) ->
@@ -101,7 +102,9 @@ handle_messages(Clients) ->
             handle_messages(Clients);
         {tcp_closed, Socket} ->
             io:format("Client disconnected: ~p~n", [Socket]),
-            handle_messages(lists:delete(Socket, Clients))
+            handle_messages(lists:delete(Socket, Clients));
+        stop ->
+            ok
     end.
 
 % Client function to handle incoming messages
@@ -117,3 +120,5 @@ client(Socket) ->
 % Function to send messages from client to server
 send_message(Socket, Message) ->
     gen_tcp:send(Socket, Message).
+
+%Socket1 = chatroom:start_client("35.188.15.57", 8080).
