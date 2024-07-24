@@ -79,8 +79,9 @@ start_server(Port) ->
 
 % Starts the client process
 start_client(IP, Port) ->
+    Self = self(),
     {ok, Socket} = gen_tcp:connect(IP, Port, [binary, {packet, 0}, {active, once}]),
-    spawn(fun() -> client(Socket) end),
+    spawn(fun() -> client(Socket, Self) end),
     Socket.
 
 % Server function to handle client connections and messages
@@ -110,11 +111,11 @@ handle_messages(Clients) ->
     end.
 
 % Client function to handle incoming messages
-client(Socket) ->
+client(Socket, Parent) ->
     receive
         {tcp, _, Message} ->
-            io:format("Received from server: ~p~n", [Message]),
-            client(Socket);
+            Parent ! {client_message, Message},
+            client(Socket, Parent);
         {tcp_closed, _} ->
             io:format("Connection closed~n");
         {tcp_error, _, Reason} ->
