@@ -11,7 +11,7 @@ start() ->
 accept_connections(ListenSocket) ->
     {ok, ClientSocket} = gen_tcp:accept(ListenSocket),
     io:format("Client connected: ~p~n", [ClientSocket]),
-    gen_tcp:send(Socket, <<"Welcome to the chat server!">>), %% Send a welcome message to the client
+    gen_tcp:send(ClientSocket, <<"Welcome to the chat server!">>), %% Send a welcome message to the client
     spawn(fun() -> handle_client(ClientSocket) end),
     accept_connections(ListenSocket).
 
