@@ -97,7 +97,8 @@ handle_messages(Clients) ->
         {tcp, Socket, Message} ->
             io:format("Received message from ~p: ~p~n", [Socket, Message]),
             lists:foreach(fun(Client) ->
-                gen_tcp:send(Client, Message)
+                gen_tcp:send(Client, Message),
+                io:format("Sent message to ~p: ~p~n", [Client, Message])
             end, Clients),
             handle_messages(Clients);
         {tcp_closed, Socket} ->
