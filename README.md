@@ -2,37 +2,33 @@
 
 As a software engineer, I hope and aspire to learn various technologies and implementations to increase my general knowledge of software and expand my repertiore so that I may contribute to the world at large with my own unique takes on solutions that people need.
 
-{Provide a description the networking program that you wrote. Describe how to use your software.  If you did Client/Server, then you will need to describe how to start both.}
+I wrote an Erlang UDP handler that acts as a server and a client for a chatroom. To use it, open an Erlang shell for the server node. The machine of the server node will have to have port 8080 (or any port you edit it to) open for UDP. In the source folder, run `c(chatroom).` to compile it, and then run `chatroom:start().` to start the server. To connect a client, open an Erlang shell. You may have to edit the code to apply to your server node. In that Erlang shell, run `Socket = chatroom:start_client().` to run the client (which connects to the server) and store the socket details. With that, you can run `chatroom:send_message(Socket, "Hello, World!").` to send a message. Every client that is connected to the server node will receive it, though you may have to `flush().` to receive it.
 
-{Describe your purpose for writing this software.}
-
-{Provide a link to your YouTube demonstration.  It should be a 4-5 minute demo of the software running (you will need to show two pieces of software running and communicating with each other) and a walkthrough of the code.}
+I wrote this to test my ability in Erlang and to provide a proof of concept of a simple UDP chatroom that is minimally functional as long as you port forward. With this proof of concept, after a bit of tweaks, it can be a real chatroom.
 
 [Software Demo Video](http://youtube.link.goes.here)
 
 # Network Communication
 
-{Describe the architecture that you used (client/server or peer-to-peer)}
+I used Erlang/OTP. It's concurrent and fault-tolerant, meaning this proof of concept can truly become a scaleable and powerful chatroom.
 
-{Identify if you are using TCP or UDP and what port numbers are used.}
+This particular instance is using UDP on port 8080.
 
-{Identify the format of messages being sent between the client and server or the messages sent between two peers.}
+The messages being sent are Erlang tuple data types where the 5th of 5 tuple members represent the message being sent.
 
 # Development Environment
 
-{Describe the tools that you used to develop the software}
+I used Erlang documentation including Learn You Some Erlang For Great Good. I also used ChatGPT for consultation. `rebar3` aided in creating a baseline setup for the project and Visual Studio Code with Erlang extensions made for easy development.
 
-{Describe the programming language that you used and any libraries.}
+I used baseline Erlang/OTP, no external libraries needed.
 
 # Useful Websites
 
-{Make a list of websites that you found helpful in this project}
-* [Web Site Name](http://url.link.goes.here)
-* [Web Site Name](http://url.link.goes.here)
+* [Learn You Some Erlang for Great Good](https://learnyousomeerlang.com/)
+* [Erlang Documentation](https://www.erlang.org/doc/readme.html)
 
 # Future Work
 
-{Make a list of things that you need to fix, improve, and add in the future.}
-* Item 1
-* Item 2
-* Item 3
+* Create a GUI to embody the proof of concept
+* Make the client easily deployable
+* Craft the server deployment so that anyone can deploy it

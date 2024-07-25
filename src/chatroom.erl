@@ -11,14 +11,7 @@ start() ->
 start_client() ->
     {ok, Socket} = gen_udp:open(rand:uniform(64511)+1024, [binary, {active,true}]),
     gen_udp:send(Socket, {35,188,15,57}, 8080, "connect"),
-    % spawn(fun flush_loop/0),
     Socket.
-
-% flush_loop() ->
-%     io:format("Flush timer started~n"),
-%     timer:sleep(1000), % Wait for 1 second
-%     c:flush(), % Flush the IO buffer
-%     flush_loop(). % Repeat
 
 % Server function to handle client connections and messages
 server(ListenSocket, Clients) ->
