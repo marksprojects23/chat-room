@@ -6,7 +6,7 @@ I wrote an Erlang UDP handler that acts as a server and a client for a chatroom.
 
 I wrote this to test my ability in Erlang and to provide a proof of concept of a simple UDP chatroom that is minimally functional as long as you port forward. With this proof of concept, after a bit of tweaks, it can be a real chatroom.
 
-[Software Demo Video](https://youtu.be/dK8NSRKNdtU)
+[Software Demo Video](https://youtu.be/1wrPJCOk4sQ)
 
 # Network Communication
 
